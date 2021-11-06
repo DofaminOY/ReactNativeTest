@@ -7,7 +7,9 @@ return (
 	<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
 	<Text style={{ color: "#006600", fontSize: 40 }}>Photo Screen!</Text>
 	<Ionicons name="md-image" size={80} color="#006600" />
+	
 	</View>
+	
 );
 };
 

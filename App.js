@@ -2,7 +2,7 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-
+import { Image } from "react-native";
 import PhotosScreen from "./screens/PhotosScreen";
 
 import FavoritesScreen from "./screens/FavoritesScreen";
@@ -52,7 +52,10 @@ const Navigator = createAppContainer(TabNavigator);
 export default function App() {
 return (
 	<Navigator>
-	<PhotosScreen />
+	<PhotosScreen
+		
+	/>
+
 	</Navigator>
 );
 }
