@@ -1,45 +1,74 @@
-import  React from "react";
-// import { Text, View } from "react-native";
-// import { Ionicons } from "@expo/vector-icons";
-import Images from "./Images";
-import { TouchableOpacity, View, Image, Dimensions, Text, StyleSheet } from "react-native";
-let deviceHeight = Dimensions.get("window").height;
-let deviceWidth = Dimensions.get("window").width;
-const styles = StyleSheet.create({
+import React, {useState, useEffect} from "react";
 
-	tinyLogo: {
-		height: deviceHeight / 3,
-		alignItems: "center",
-		width: deviceWidth / 3,
-		borderRadius: 10, marginTop: 35, margin: 5
-	},
-	
-  });
+import { SafeAreaView, View, StyleSheet, Text } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
 
 const Favorites = () => {
-return (
-<View >
-{
-	Images.map((image, index) => (
-			
-		<TouchableOpacity key={index} onPress=
-		{() => {}}>
-			<Image scource={image.url}
-			style={styles.tinyLogo}
+	const [filterdData, setfilterdData] = useState([]);
+	const [masterData, setmasterData] = useState([]);
+
+		useEffect(() => {
+			fetchPosts();
+			return () => {
+
+			}
+		}), 
+		[]
+	const fetchPosts = () => {
+		const apiURL = "https://jsonplaceholder.typicode.com/photos?albumId=1";
+		fetch(apiURL)
+		.then((response) => response.json())
+		.then((responseJson) =>{
+			setfilterdData(responseJson);
+			setmasterData(responseJson);
+		}).catch((error) => {
+			console.error(error);
+	 })
+	}
+	const ItemView = ({item}) =>{
+     return(
+		 <Text style = {styles.itemStyle}>
+			{item.id}{". "}{item.title.toUpperCase()} 
+		 </Text>
+	 )
+	}
+
+	const ItemSeparatorView = () => {
+		return (
+			<View
+			style = {{height: 0.5, width: "100%", backgroundColor: "#c8c8c8"}}
 			/>
-			
-			
+		)
+	}
+	
 
-		</TouchableOpacity>
-	))
-}
-
-</View>
-
+return (
+	<SafeAreaView style={styles.container}>
+	
+		<View>
+	
+			<FlatList
+			data = {filterdData}
+			keyExtractor={(item, index) => index.toString()}
+			ItemSeparatorComponent = {ItemSeparatorView}
+			renderItem={ItemView}
+			/>
+	
+	</View>
+	
+	 </SafeAreaView>
 	
 	
 );
 };
+const styles = StyleSheet.create({
+	continue:{
+backgroundColor: 'white',
+	},
+	itemStyle: {
+		padding: 15
+	}
+})
 
 export default Favorites;
 	

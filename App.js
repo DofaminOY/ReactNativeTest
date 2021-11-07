@@ -1,11 +1,16 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+
 import { Ionicons } from "@expo/vector-icons";
 import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { Image } from "react-native";
 import PhotosScreen from "./screens/PhotosScreen";
-
 import FavoritesScreen from "./screens/FavoritesScreen";
+import { SafeAreaView, View, StyleSheet, Text } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+
+
+
+
 
 const TabNavigator = createBottomTabNavigator({
 	Photo: {
@@ -49,13 +54,16 @@ Favorites: {
 
 const Navigator = createAppContainer(TabNavigator);
 
-export default function App() {
-return (
-	<Navigator>
-	<PhotosScreen
-		
-	/>
 
+
+export default function App() {
+	
+return (
+	
+	<Navigator>
+	<PhotosScreen/>
 	</Navigator>
+
 );
-}
+
+};
