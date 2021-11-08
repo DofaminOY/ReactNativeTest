@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, StyleSheet, Text, TextInput } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { SafeAreaView, View, StyleSheet, Text, TextInput, FlatList  } from "react-native";
+// import { FlatList } from "react-native-gesture-handler";
 
 const Photo = () => {
 	const [filterdData, setfilterdData] = useState([]);
 	const [masterData, setmasterData] = useState([]);
-
+	const [search, setsearch] = useState('');
 		useEffect(() => {
 			fetchPosts();
 			return () => {
 
 			}
-		}), 
-		[]
+		},
+		[])
 	const fetchPosts = () => {
 		const apiURL = "https://jsonplaceholder.typicode.com/photos?albumId=1";
 		fetch(apiURL)
@@ -24,6 +24,21 @@ const Photo = () => {
 			console.error(error);
 	 })
 	}
+	const searchFilter = (text) => {
+		if (text) {
+			const newData = masterData.filter((item) => {
+			const itemData = item.title ? item.title.toUpperCase() : ''.toUpperCase();
+			const textData = text.toUpperCase();
+			return itemData.indexOf(textData) > -1;
+			});
+		setfilterdData(newData);
+		setsearch(text);	
+	} else {
+		setfilterdData(masterData);
+		setsearch(text);
+	}
+	}
+
 	const ItemView = ({item}) =>{
      return(
 		 <Text style = {styles.itemStyle}>
@@ -45,6 +60,10 @@ return (
 	    <View style={styles.container}>
 		<TextInput
 		style={styles.textInputStyle}
+		value={search}
+		placeholder = "search Here"
+		underlineColorAndroid = 'transparent'
+		onChangeText = {(text) => searchFilter(text)}
 		/>
 
 		<FlatList
@@ -60,9 +79,10 @@ return (
 	
 );
 };
+
 const styles = StyleSheet.create({
 	continue:{
-	paddingTop: 50,
+	
 backgroundColor: 'white',
 	},
 	itemStyle: {
@@ -80,6 +100,9 @@ backgroundColor: 'white',
 		backgroundColor: "white"
 	}
 })
+
+
+
 
 
 export default Photo;
