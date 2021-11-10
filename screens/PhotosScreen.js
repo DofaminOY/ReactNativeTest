@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, StyleSheet, Text, TextInput, FlatList  } from "react-native";
-// import { FlatList } from "react-native-gesture-handler";
+import { SafeAreaView, View, StyleSheet, Text, TextInput, FlatList, Image } from "react-native";
 
+// import { FlatList } from "react-native-gesture-handler";
+// let deviceHeight = Dimensions.get("window").height;
+// let deviceWidth = Dimensions.get("window").width;
 const Photo = () => {
 	const [filterdData, setfilterdData] = useState([]);
 	const [masterData, setmasterData] = useState([]);
@@ -13,8 +15,8 @@ const Photo = () => {
 			}
 		},
 		[])
-	const fetchPosts = () => {
-		const apiURL = "https://jsonplaceholder.typicode.com/photos?albumId=1";
+	const fetchPosts = async () => {
+		const apiURL = await "https://jsonplaceholder.typicode.com/photos?albumId=1";
 		fetch(apiURL)
 		.then((response) => response.json())
 		.then((responseJson) =>{
@@ -38,14 +40,18 @@ const Photo = () => {
 		setsearch(text);
 	}
 	}
-
+   
 	const ItemView = ({item}) =>{
      return(
 		 <Text style = {styles.itemStyle}>
-			{item.id}{". "}{item.title.toUpperCase()} 
+			{item.id}{". "}{item.url + '.     ' + item.thumbnailUrl}{item.title.toUpperCase()} 
 		 </Text>
+		
 	 )
 	}
+	
+
+	  
 
 	const ItemSeparatorView = () => {
 		return (
@@ -54,8 +60,9 @@ const Photo = () => {
 			/>
 		)
 	}
+	
 return (
-<SafeAreaView style={{ flex: 1}}>
+<SafeAreaView style={{ flex: 1 }}>
 	
 	    <View style={styles.container}>
 		<TextInput
@@ -73,7 +80,14 @@ return (
 		renderItem={ItemView}
 		/>
 
+
+     
+
+
+
+
 </View>
+
 
  </SafeAreaView>
 	
@@ -84,17 +98,25 @@ const styles = StyleSheet.create({
 	continue:{
 	
 backgroundColor: 'white',
+
 	},
 	itemStyle: {
 		
 		padding: 10
 	},
+	// tinyLogo: {
+	// 	height: deviceHeight / 3,
+	// 	alignItems: "center",
+	// 	width: deviceWidth / 3,
+	// 	borderRadius: 10, marginTop: 35, margin: 5
+	// },
 	textInputStyle: {
 		
-		borderRadius: 2,
-		height: 50,
+		borderRadius: 10,
+		height: 40,
 		borderWidth: 1,
 		paddingLeft: 20,
+		marginTop: 40,
 		margin: 5,
 		borderColor: "#009688",
 		backgroundColor: "white"
