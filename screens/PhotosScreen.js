@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, StyleSheet, Text, TextInput, FlatList, Image } from "react-native";
+import {   SafeAreaView, View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity } from "react-native";
 
 // import { FlatList } from "react-native-gesture-handler";
 // let deviceHeight = Dimensions.get("window").height;
@@ -43,10 +43,18 @@ const Photo = () => {
    
 	const ItemView = ({item}) =>{
      return(
+		 
+		 <TouchableOpacity>
+		 <Image 
+		 source = {{uri: `${item.url}`}}
+
+         style = {styles.image}
+		 />
 		 <Text style = {styles.itemStyle}>
-			{item.id}{". "}{item.url + '.     ' + item.thumbnailUrl}{item.title.toUpperCase()} 
+			{item.id}{". "}{item.title.toUpperCase()} 
 		 </Text>
-		
+		 </TouchableOpacity>
+		 
 	 )
 	}
 	
@@ -60,12 +68,16 @@ const Photo = () => {
 			/>
 		)
 	}
-	
+	// <SafeAreaView style={{ flex: 1 }}></SafeAreaView>
 return (
+	
 <SafeAreaView style={{ flex: 1 }}>
 	
-	    <View style={styles.container}>
+	
+	   
+		
 		<TextInput
+		
 		style={styles.textInputStyle}
 		value={search}
 		placeholder = "search Here"
@@ -74,22 +86,21 @@ return (
 		/>
 
 		<FlatList
+		columnWrapperStyle = {{flex: 1, justifyContent: 'space-around'}}
+		numColumns = {3}
 		data = {filterdData}
 		keyExtractor={(item, index) => index.toString()}
-		ItemSeparatorComponent = {ItemSeparatorView}
+		// keyExtractor={(item => item.id)}
+		
 		renderItem={ItemView}
+		contentContainerStyle={{paddingBottom: 100}}
 		/>
 
 
-     
-
-
-
-
-</View>
 
 
  </SafeAreaView>
+ 
 	
 );
 };
@@ -100,16 +111,30 @@ const styles = StyleSheet.create({
 backgroundColor: 'white',
 
 	},
+	image:{
+		
+		padding: 10,
+		width: '30%',
+		height: 200,
+		display: "flex",
+	    alignItems: "center",
+		flexDirection: "column",
+		
+		
+		},
 	itemStyle: {
 		
-		padding: 10
+		padding: 10,
+		width: '30%',
+		
+		display: "flex",
+	    alignItems: "center",
+		flexDirection: "column",
+		
+
+
 	},
-	// tinyLogo: {
-	// 	height: deviceHeight / 3,
-	// 	alignItems: "center",
-	// 	width: deviceWidth / 3,
-	// 	borderRadius: 10, marginTop: 35, margin: 5
-	// },
+	
 	textInputStyle: {
 		
 		borderRadius: 10,
@@ -120,8 +145,10 @@ backgroundColor: 'white',
 		margin: 5,
 		borderColor: "#009688",
 		backgroundColor: "white"
-	}
+	},
+	
 })
+
 
 
 
