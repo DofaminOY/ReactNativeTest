@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from "react";
-import {   SafeAreaView, View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity } from "react-native";
+import {  Modal, SafeAreaView, View, StyleSheet, Text, TextInput, FlatList, Image, TouchableOpacity } from "react-native";
 
 // import { FlatList } from "react-native-gesture-handler";
-// let deviceHeight = Dimensions.get("window").height;
-// let deviceWidth = Dimensions.get("window").width;
+
 const Photo = () => {
 	const [filterdData, setfilterdData] = useState([]);
 	const [masterData, setmasterData] = useState([]);
 	const [search, setsearch] = useState('');
+	const  [modalVisible, setModalVisible] = React.useState(true);
 		useEffect(() => {
 			fetchPosts();
 			return () => {
@@ -42,38 +42,46 @@ const Photo = () => {
 	}
    
 	const ItemView = ({item}) =>{
+		
      return(
+		
+		
 		 
-		 <TouchableOpacity>
-		 <Image 
-		 source = {{uri: `${item.url}`}}
+	<TouchableOpacity
+	style = {styles.itemStyle}
+	>
+	
+	<Image 
+	source = {{uri: `${item.url}`}}
 
-         style = {styles.image}
-		 />
-		 <Text style = {styles.itemStyle}>
+	style = {styles.images}
+	/>
+	
+	<Text style = {styles.titles}>
 			{item.id}{". "}{item.title.toUpperCase()} 
-		 </Text>
-		 </TouchableOpacity>
+    </Text>
+
+	
+		 {/* <Modal
+		 animationType = "slide"
+		 presentationStyle = "formSheet"
+		 >
+
+			 
+		 </Modal> */}
+		 
+	</TouchableOpacity>
 		 
 	 )
 	}
 	
+	
 
-	  
-
-	const ItemSeparatorView = () => {
-		return (
-			<View
-			style = {{height: 0.5, width: "100%", backgroundColor: "#c8c8c8"}}
-			/>
-		)
-	}
 	// <SafeAreaView style={{ flex: 1 }}></SafeAreaView>
 return (
 	
-<SafeAreaView style={{ flex: 1 }}>
-	
-	
+<SafeAreaView style={styles.container}>
+
 	   
 		
 		<TextInput
@@ -87,13 +95,14 @@ return (
 
 		<FlatList
 		columnWrapperStyle = {{flex: 1, justifyContent: 'space-around'}}
-		numColumns = {3}
+		numColumns = { 3 }
+		contentContainerStyle={{paddingBottom: 100}}
 		data = {filterdData}
-		keyExtractor={(item, index) => index.toString()}
-		// keyExtractor={(item => item.id)}
+		// keyExtractor={(item, index) => index.toString()}
+		keyExtractor={(item => item.id)}
 		
 		renderItem={ItemView}
-		contentContainerStyle={{paddingBottom: 100}}
+		
 		/>
 
 
@@ -106,31 +115,35 @@ return (
 };
 
 const styles = StyleSheet.create({
-	continue:{
+	container:{
 	
 backgroundColor: 'white',
 
 	},
-	image:{
-		
-		padding: 10,
-		width: '30%',
+	images:{
+		width: 100,
 		height: 200,
-		display: "flex",
-	    alignItems: "center",
-		flexDirection: "column",
+		// resizeMode: "contain",
+		marginTop: 5,
+		textAlign: 'center'
+	
 		
 		
 		},
+	titles:{
+        fontSize: 18,
+		fontWeight: '500',
+
+		},
 	itemStyle: {
 		
-		padding: 10,
-		width: '30%',
 		
+		
+		width: '30%',
 		display: "flex",
 	    alignItems: "center",
 		flexDirection: "column",
-		
+		margin: 5
 
 
 	},
